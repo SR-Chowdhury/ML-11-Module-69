@@ -8,10 +8,10 @@ const Slider = () => {
 
     // 
     return (
-        <div className="carousel w-full">
-            <div id="slide1" className="carousel-item relative w-full h-[600px]">
-                <img src={img1} className="w-screen h-screen" />
-                <div className="absolute flex h-full w-full items-center left-0 top-0 bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] ">
+        <div className="carousel w-full h-[600px]">
+            <div id="slide1" className="carousel-item relative w-full">
+                <img src={img1} className="w-full rounded-lg" />
+                <div className="absolute flex h-full rounded-lg w-full items-center left-0 top-0 bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] ">
                     <div className='text-white space-y-5 pl-28 w-1/3'>
                         <h1 className='text-6xl font-bold'>Affordable Price For Car Servicing</h1>
                         <p>There are many variations of passages of  available, but the majority have suffered alteration in some form</p>
@@ -27,8 +27,8 @@ const Slider = () => {
                 </div>
             </div>
             <div id="slide2" className="carousel-item relative w-full h-[600px]">
-                <img src={img2} className="w-screen h-screen" />
-                <div className="absolute flex h-full w-full items-center left-0 top-0 bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] ">
+                <img src={img2} className="w-screen h-screen rounded-lg" />
+                <div className="absolute flex h-full w-full rounded-lg items-center left-0 top-0 bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] ">
                     <div className='text-white space-y-5 pl-28 w-1/3'>
                         <h1 className='text-6xl font-bold'>Affordable Price For Car Servicing</h1>
                         <p>There are many variations of passages of  available, but the majority have suffered alteration in some form</p>
@@ -44,8 +44,8 @@ const Slider = () => {
                 </div>
             </div>
             <div id="slide3" className="carousel-item relative w-full h-[600px]">
-                <img src={img3} className="w-screen h-screen" />
-                <div className="absolute flex h-full w-full items-center left-0 top-0 bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] ">
+                <img src={img3} className="w-screen h-screen rounded-lg" />
+                <div className="absolute flex h-full w-full rounded-lg items-center left-0 top-0 bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] ">
                     <div className='text-white space-y-5 pl-28 w-1/3'>
                         <h1 className='text-6xl font-bold'>Affordable Price For Car Servicing</h1>
                         <p>There are many variations of passages of  available, but the majority have suffered alteration in some form</p>
@@ -61,8 +61,8 @@ const Slider = () => {
                 </div>
             </div>
             <div id="slide4" className="carousel-item relative w-full h-[600px]">
-                <img src={img4} className="w-screen h-screen" />
-                <div className="absolute flex h-full w-full items-center left-0 top-0 bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] ">
+                <img src={img4} className="w-screen h-screen rounded-lg" />
+                <div className="absolute flex h-full w-full rounded-lg items-center left-0 top-0 bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] ">
                     <div className='text-white space-y-5 pl-28 w-1/3'>
                         <h1 className='text-6xl font-bold'>Affordable Price For Car Servicing</h1>
                         <p>There are many variations of passages of  available, but the majority have suffered alteration in some form</p>
