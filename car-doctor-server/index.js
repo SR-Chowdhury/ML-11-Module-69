@@ -1,6 +1,7 @@
 const {
     MongoClient,
-    ServerApiVersion
+    ServerApiVersion,
+    ObjectId
 } = require('mongodb');
 require('dotenv').config();
 const express = require('express');
@@ -38,9 +39,22 @@ async function run() {
         });
 
         // CHECKOUT
-        app.post('/checkout/:id', (req, res) => {
+        app.get('/services/:id', async (req, res) => {
             const id = req.params.id;
             console.log('I got the ', id);
+
+            const query = {
+                _id: new ObjectId(id)
+            };
+            const options = {
+                projection: {
+                    title: 1,
+                    service_id : 1,
+                    price : 1
+                },
+            };
+            const result = await serviceCollection.findOne(query, options);
+            res.send(result);
         });
 
 
