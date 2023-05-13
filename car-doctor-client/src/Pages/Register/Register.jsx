@@ -71,7 +71,7 @@ const Register = () => {
                         }
 
                         <div className="form-control mt-6">
-                            <input className="btn btn-primary" type="submit" value="Login" />
+                            <input className="btn btn-primary" type="submit" value="Register" />
                         </div>
                         <div className='text-center'>
                             <p>Or Sign up with</p>

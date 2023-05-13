@@ -17,7 +17,7 @@ const BookService = () => {
         const phone = form.phone.value;
         const email = user?.email;
         const message = form.message.value;
-        const orderData = {customerName: name, date, phone, email, message, serviceId : service._id};
+        const orderData = {customerName: name, serviceName : service.title, image : service.img, date, phone, email, price : service.price, message, serviceId : service._id};
         console.log(orderData);
 
         fetch('http://localhost:5000/bookings', {

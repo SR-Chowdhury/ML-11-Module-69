@@ -51,7 +51,8 @@ async function run() {
                 projection: {
                     title: 1,
                     service_id : 1,
-                    price : 1
+                    price : 1,
+                    img : 1,
                 },
             };
             const result = await serviceCollection.findOne(query, options);
@@ -62,7 +63,7 @@ async function run() {
          *                      Bokkings
          * ----------------------------------------------------------
          */
-        
+
         // CREATE
         app.post('/bookings', async (req, res) => {
             const bookings = req.body;
