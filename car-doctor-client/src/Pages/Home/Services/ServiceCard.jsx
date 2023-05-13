@@ -14,7 +14,7 @@ const ServiceCard = ({ service }) => {
                 <p>If a dog chews shoes whose shoes does he choose?</p>
                 <div className='flex justify-between text-orange-600 font-bold'>
                     <p>Price: ${price}</p>
-                    <Link to={`/checkout/${_id}`}><FaArrowRight /></Link>
+                    <Link to={`/book-service/${_id}`}><FaArrowRight /></Link>
                 </div>
             </div>
         </div>
