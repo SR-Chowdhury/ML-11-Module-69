@@ -1,12 +1,9 @@
 import React from 'react';
-import Spinner from 'react-bootstrap/Spinner';
 
 const Loading = () => {
     return (
         <div className='w-screen mx-auto p-8 text-center'>
-            <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <progress className="progress w-56"></progress>
         </div>
     );
 };

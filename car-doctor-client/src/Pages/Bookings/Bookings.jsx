@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider';
+import Banner from '../Shared/Banner/Banner';
+import BookingRow from './BookingRow';
 
 const Bookings = () => {
 
     const { user } = useContext(AuthContext);
     const [bookings, setBookings] = useState([]);
 
-    useEffect( () => {
+    useEffect(() => {
         fetch(`http://localhost:5000/bookings?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setBookings(data))
@@ -14,8 +16,17 @@ const Bookings = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Bookings ....</h1>
+        <div className='mb-16'>
+            <Banner>Cart Details</Banner>
+            <div className="overflow-x-auto w-full">
+                <table className="table w-full">
+                    <tbody>
+                        {
+                            bookings.map((booking, index) => <BookingRow key={index} booking={booking}/>)
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
