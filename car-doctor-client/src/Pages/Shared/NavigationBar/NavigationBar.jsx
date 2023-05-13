@@ -30,6 +30,10 @@ const NavigationBar = () => {
         <li><Link to={'/services'}>Services</Link></li>
         <li><Link to={'/blog'}>Blog</Link></li>
         <li><Link to={'/contact'}>Contact</Link></li>
+        {
+            user && <li><Link to={'/bookings'}>My Bookings</Link></li>
+        }
+        
     </>
 
     return (
