@@ -19,7 +19,8 @@ const NavigationBar = () => {
                     hideClass: {
                         popup: 'animate__animated animate__fadeOutUp'
                     }
-                }) 
+                })
+                localStorage.removeItem('car-doctor-access-token'); 
             })
             .catch(err => console.log(err.message))
     }

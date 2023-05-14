@@ -33,6 +33,21 @@ async function run() {
         const serviceCollection = client.db('carDoctor').collection('services');
         const bookingCollection = client.db('carDoctor').collection('bookings');
 
+        /**
+         *                      JWT
+         * ----------------------------------------------------------
+         */
+        app.post('/jwt', (req, res) => {
+            const user = req.body;
+            // console.log('jwt ', user);
+            const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'});
+            res.send({token});
+        });
+
+        /**
+         *                      Services
+         * ----------------------------------------------------------
+         */
         // READ (MULTIPLE)
         app.get('/services', async (req, res) => {
             const cursor = serviceCollection.find();
@@ -51,9 +66,9 @@ async function run() {
             const options = {
                 projection: {
                     title: 1,
-                    service_id : 1,
-                    price : 1,
-                    img : 1,
+                    service_id: 1,
+                    price: 1,
+                    img: 1,
                 },
             };
             const result = await serviceCollection.findOne(query, options);
@@ -69,8 +84,10 @@ async function run() {
         app.get('/bookings', async (req, res) => {
             // console.log(req.query);
             let query = {};
-            if(req.query?.email) {
-                query = { email : req.query.email}
+            if (req.query?.email) {
+                query = {
+                    email: req.query.email
+                }
             }
             const result = await bookingCollection.find(query).toArray();
             res.send(result);
@@ -90,10 +107,12 @@ async function run() {
             const id = req.params.id;
             const updateStatus = req.body;
             console.log(id, updateStatus);
-            const query = { _id : new ObjectId(id)};
+            const query = {
+                _id: new ObjectId(id)
+            };
             const updateBooking = {
                 $set: {
-                    status : updateStatus.status
+                    status: updateStatus.status
                 }
             };
             const result = await bookingCollection.updateOne(query, updateBooking);
@@ -103,7 +122,9 @@ async function run() {
         // DELETE
         app.delete('/bookings/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id : new ObjectId(id)};
+            const query = {
+                _id: new ObjectId(id)
+            };
             const result = await bookingCollection.deleteOne(query);
             res.send(result);
         });

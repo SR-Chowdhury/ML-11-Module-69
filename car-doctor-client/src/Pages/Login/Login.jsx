@@ -34,9 +34,28 @@ const Login = () => {
                         popup: 'animate__animated animate__fadeOutUp'
                     }
                 })
-                const loggedUser = result.user;
+                const user = result.user;
+                const loggeUser = {
+                    email: user.email
+                }
+
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type' : 'application/json'
+                    },
+                    body: JSON.stringify(loggeUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log(data)
+                        localStorage.setItem('car-doctor-access-token', data.token);
+                    })
+                    .catch(err => console.log(err.message))
+
                 setError('');
                 form.reset();
+
                 navigate(from, {replace: true});
             })
             .catch(err => setError(err.message))
