@@ -48,6 +48,45 @@ const Bookings = () => {
         })
     }
 
+    const handleBookingConfirm = id => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, confirm!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/bookings/${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'content-type' : 'application/json',
+                    },
+                    body: JSON.stringify({status : 'confirm'})
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.modifiedCount > 0) {
+                            Swal.fire(
+                                'Confirmed!',
+                                'Confirmed successfully.',
+                                'success'
+                            )
+                            const remaining = bookings.filter(booking => booking._id !== id);
+                            const update = bookings.find(booking => booking._id === id);
+                            update.status = 'confirm';
+                            const newBookings = [update, ...remaining];
+                            setBookings(newBookings);
+                        }
+                        console.log(data);
+                    })
+                    .catch(err => console.log(err.message))
+            }
+        })
+    }
+
     return (
         <div className='mb-16'>
             <Banner>Cart Details</Banner>
@@ -66,7 +105,13 @@ const Bookings = () => {
                     </thead>
                     <tbody>
                         {
-                            bookings.map((booking, index) => <BookingRow key={index} booking={booking} handleDelete={handleDelete} />)
+                            bookings.map((booking, index) =>
+                                <BookingRow
+                                    key={index}
+                                    booking={booking}
+                                    handleDelete={handleDelete}
+                                    handleBookingConfirm={handleBookingConfirm}
+                                />)
                         }
                     </tbody>
                 </table>
