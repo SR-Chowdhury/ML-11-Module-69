@@ -25,6 +25,31 @@ const client = new MongoClient(uri, {
     }
 });
 
+/**
+ * ------------------------- Verify Token --------------------------
+ */
+const verifyToken = (req, res, next) => {
+    console.log('I am outside verifyToken()');
+    // console.log(req.headers.authorization);
+    const authorization = req.headers.authorization;
+    if (!authorization) {
+        return res.status(401).send({ error : true, message : 'Unauthorized Access'});
+    }
+    const token = authorization.split(' ')[1];
+    console.log(token);
+    // Verify Token
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(401).send({ error : true, message : 'Unauthorized Access'});
+        }
+        req.decoded = decoded;
+        next();
+    });
+
+}
+
+
+
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
@@ -81,8 +106,9 @@ async function run() {
          */
 
         // READ
-        app.get('/bookings', async (req, res) => {
+        app.get('/bookings', verifyToken, async (req, res) => {
             // console.log(req.query);
+            console.log(req.headers.authorization);
             let query = {};
             if (req.query?.email) {
                 query = {
