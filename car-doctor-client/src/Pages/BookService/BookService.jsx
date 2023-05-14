@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import Banner from '../Shared/Banner/Banner';
 import { AuthContext } from '../../Providers/AuthProvider';
 import Swal from 'sweetalert2';
@@ -8,6 +8,7 @@ const BookService = () => {
 
     const service = useLoaderData();
     const {user} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleBookService = event => {
         event.preventDefault();
@@ -40,6 +41,7 @@ const BookService = () => {
                         }
                     })
                     form.reset();
+                    navigate('/bookings');
                 }
                 console.log(data)
             })
