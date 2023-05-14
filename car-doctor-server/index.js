@@ -40,7 +40,7 @@ const verifyToken = (req, res, next) => {
     // Verify Token
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
         if (err) {
-            return res.status(401).send({ error : true, message : 'Unauthorized Access'});
+            return res.status(403).send({ error : true, message : 'Unauthorized Access'});
         }
         req.decoded = decoded;
         next();
@@ -108,7 +108,10 @@ async function run() {
         // READ
         app.get('/bookings', verifyToken, async (req, res) => {
             // console.log(req.query);
-            console.log(req.headers.authorization);
+            // console.log(req.headers.authorization);
+            const decoded = req.decoded;
+            console.log(decoded);
+
             let query = {};
             if (req.query?.email) {
                 query = {

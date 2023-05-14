@@ -3,21 +3,34 @@ import { AuthContext } from '../../Providers/AuthProvider';
 import Banner from '../Shared/Banner/Banner';
 import BookingRow from './BookingRow';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const Bookings = () => {
 
     const { user } = useContext(AuthContext);
     const [bookings, setBookings] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:5000/bookings?email=${user?.email}`, {
             method: 'GET',
             headers: {
-                authorization : `Bearer ${localStorage.getItem('car-doctor-access-token')}`
+                authorization: `Bearer ${localStorage.getItem('car-doctor-access-token')}`
             }
         })
             .then(res => res.json())
-            .then(data => setBookings(data))
+            .then(data => {
+                if (!data.error) {
+                    setBookings(data)
+                }
+                else {
+                    Swal.fire(
+                        'Session Time Out!',
+                        'success'
+                    )
+                    navigate('/');
+                }
+            })
             .catch(err => console.log(err.message))
     }, []);
 
@@ -67,9 +80,9 @@ const Bookings = () => {
                 fetch(`http://localhost:5000/bookings/${id}`, {
                     method: 'PATCH',
                     headers: {
-                        'content-type' : 'application/json',
+                        'content-type': 'application/json',
                     },
-                    body: JSON.stringify({status : 'confirm'})
+                    body: JSON.stringify({ status: 'confirm' })
                 })
                     .then(res => res.json())
                     .then(data => {
