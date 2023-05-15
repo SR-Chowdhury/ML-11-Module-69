@@ -1,14 +1,18 @@
 import React, { useContext, useState } from 'react';
 import img from '../../assets/images/login/login.svg';
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Providers/AuthProvider';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const Register = () => {
 
     const { createUser } = useContext(AuthContext);
     const [error, setError] = useState('');
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
 
     const handleRegister = event => {
         event.preventDefault();
@@ -34,6 +38,7 @@ const Register = () => {
                 const loggedUser = result.user;
                 setError('');
                 form.reset();
+                navigate(from, {replace: true});
             })
             .catch(err => setError(err.message))
     }
@@ -73,15 +78,8 @@ const Register = () => {
                         <div className="form-control mt-6">
                             <input className="btn btn-primary" type="submit" value="Register" />
                         </div>
-                        <div className='text-center'>
-                            <p>Or Sign up with</p>
-                            <div className='my-3 flex justify-center gap-4 text-2xl'>
-                                <Link><FaGoogle /></Link>
-                                <Link><FaGithub /></Link>
-                                <Link><FaFacebookF /></Link>
-                            </div>
-                            <p>Already Have Account? <Link className='text-orange-500' to={'/login'}>Login</Link></p>
-                        </div>
+                        <SocialLogin/>
+                        <p>Already Have Account? <Link className='text-orange-500' to={'/login'}>Login</Link></p>
                     </form>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import app from '../Firebase/Firebase.config';
 
 export const AuthContext = createContext(null);
@@ -10,6 +10,7 @@ const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const googleProvider = new GoogleAuthProvider();
 
     const createUser = (email, password) => {
         setLoading(true);
@@ -21,6 +22,11 @@ const AuthProvider = ({children}) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
+    const googleSignIn = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider);
+    }
+
     const logOut = () => {
         setLoading(true);
         return signOut(auth);
@@ -28,8 +34,35 @@ const AuthProvider = ({children}) => {
 
     useEffect( () => {
 
-        const unSubscribe = onAuthStateChanged(auth, CurrentUser => {
-            setUser(CurrentUser);
+        const unSubscribe = onAuthStateChanged(auth, currentUser => {
+            console.log('Current User in Auth Provider', currentUser);
+            setUser(currentUser);
+
+            const loggeUser = {
+                email: currentUser?.email
+            }
+
+            if (currentUser && currentUser.email) {
+                console.log('I im ain jwt state');
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type' : 'application/json'
+                    },
+                    body: JSON.stringify(loggeUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log(data)
+                        localStorage.setItem('car-doctor-access-token', data.token);
+                    })
+                    .catch(err => console.log(err.message))
+            }
+            else {
+                console.log('hello i am logout');
+                localStorage.removeItem('car-doctor-access-token'); 
+            }
+
             setLoading(false);
         });
 
@@ -42,6 +75,7 @@ const AuthProvider = ({children}) => {
         loading,
         createUser,
         singIn,
+        googleSignIn,
         logOut,
     };
 

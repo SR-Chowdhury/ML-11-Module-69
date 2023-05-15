@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import img from '../../assets/images/login/login.svg';
-import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Providers/AuthProvider';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const Login = () => {
 
@@ -34,24 +34,8 @@ const Login = () => {
                         popup: 'animate__animated animate__fadeOutUp'
                     }
                 })
+                
                 const user = result.user;
-                const loggeUser = {
-                    email: user.email
-                }
-
-                fetch('http://localhost:5000/jwt', {
-                    method: 'POST',
-                    headers: {
-                        'content-type' : 'application/json'
-                    },
-                    body: JSON.stringify(loggeUser)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        // console.log(data)
-                        localStorage.setItem('car-doctor-access-token', data.token);
-                    })
-                    .catch(err => console.log(err.message))
 
                 setError('');
                 form.reset();
@@ -92,15 +76,8 @@ const Login = () => {
                         <div className="form-control mt-6">
                             <input className="btn btn-primary" type="submit" value="Login" />
                         </div>
-                        <div className='text-center'>
-                            <p>Or Sign in with</p>
-                            <div className='my-3 flex justify-center gap-4 text-2xl'>
-                                <Link><FaGoogle /></Link>
-                                <Link><FaGithub /></Link>
-                                <Link><FaFacebookF /></Link>
-                            </div>
-                            <p>New in this Website? <Link className='text-orange-500' to={'/register'}>Register</Link></p>
-                        </div>
+                        <SocialLogin/>
+                        <p>New in this Website? <Link className='text-orange-500' to={'/register'}>Register</Link></p>
                     </form>
                 </div>
             </div>
