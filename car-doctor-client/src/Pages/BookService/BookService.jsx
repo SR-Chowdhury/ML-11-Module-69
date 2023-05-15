@@ -21,7 +21,7 @@ const BookService = () => {
         const orderData = {customerName: name, serviceName : service.title, image : service.img, date, phone, email, price : service.price, message, serviceId : service._id};
         console.log(orderData);
 
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://car-doctor-server-one-kappa.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type' : 'application/json',

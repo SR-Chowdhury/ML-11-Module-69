@@ -44,7 +44,7 @@ const AuthProvider = ({children}) => {
 
             if (currentUser && currentUser.email) {
                 console.log('I im ain jwt state');
-                fetch('http://localhost:5000/jwt', {
+                fetch('https://car-doctor-server-one-kappa.vercel.app/jwt', {
                     method: 'POST',
                     headers: {
                         'content-type' : 'application/json'

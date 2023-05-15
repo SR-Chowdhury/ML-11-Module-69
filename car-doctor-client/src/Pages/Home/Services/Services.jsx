@@ -8,7 +8,7 @@ const Services = () => {
 
     useEffect(() => {
 
-        fetch('http://localhost:5000/services')
+        fetch('https://car-doctor-server-one-kappa.vercel.app/services')
             .then(res => res.json())
             .then(data => setServices(data))
             .catch(err => console.log(err.message))
