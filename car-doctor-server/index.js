@@ -53,7 +53,8 @@ const verifyToken = (req, res, next) => {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect();
+        // client.connect();
 
         const serviceCollection = client.db('carDoctor').collection('services');
         const bookingCollection = client.db('carDoctor').collection('bookings');
@@ -75,7 +76,28 @@ async function run() {
          */
         // READ (MULTIPLE)
         app.get('/services', async (req, res) => {
-            const cursor = serviceCollection.find();
+            // Sorting
+            const sort = req.query.sort;
+            const search = req.query.search;
+
+            // Conditional Operator of MongoDB
+            // const query = { price : {$gt : 50}};
+
+            // Search form DB using MongoDB
+            const query = {
+                title : {
+                    $regex : search,
+                    $options : "i"
+                }
+            };
+
+
+            const options = {
+                sort: {
+                    "price" : sort=== 'asc' ? 1 : -1
+                }
+            };
+            const cursor = serviceCollection.find(query, options);
             const result = await cursor.toArray();
             res.send(result);
         });

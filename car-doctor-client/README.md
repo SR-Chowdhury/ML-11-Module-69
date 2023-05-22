@@ -2,6 +2,9 @@
 
 > Use this boilerplate just clone this project and run `npm install`
 
+>> Car-Doctor-Client client-side firebase : https://cars-doctor-fdb34.web.app/
+>> Car-Doctor-Client server-side vercel   : https://car-doctor-server-one-kappa.vercel.app/ 
+
 ### This boilerplate includes:
 
 * React Route (Custom)
